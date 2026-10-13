@@ -1,0 +1,42 @@
+{
+  "id": "./",
+  "name": "VIAS.OS",
+  "short_name": "VIAS",
+  "description": "Visual Internet Archive System",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "background_color": "#121110",
+  "theme_color": "#121110",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-1024.jpg",
+      "sizes": "1024x1024",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-1024.jpg",
+      "sizes": "1024x1024",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ],
+  "share_target": {
+    "action": "share-target",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "images",
+          "accept": ["image/*"]
+        }
+      ]
+    }
+  }
+}

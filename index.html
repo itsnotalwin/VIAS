@@ -22,6 +22,17 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
+      // Automatic fallback if repository root is served uncompiled on GitHub Pages
+      if (
+        window.location.hostname.indexOf('github.io') !== -1 &&
+        window.location.pathname.indexOf('/docs') === -1 &&
+        document.querySelector('script[src*="main.tsx"]')
+      ) {
+        var cleanPath = window.location.pathname.replace(/\/+$/, '');
+        window.location.replace(cleanPath + '/docs/' + window.location.search + window.location.hash);
+      }
+    </script>
+    <script>
       // Prevent theme flashing
       const savedTheme = localStorage.getItem('atlas_theme');
       if (savedTheme === 'light') {

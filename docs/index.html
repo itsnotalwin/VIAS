@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#faf6f0" media="(prefers-color-scheme: light)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="VIAS" />
+    <meta name="description" content="VIAS - A visual internet archive and mood board with real-time sync, interactive canvas, and local file storage." />
+    <!-- PWA primary icons and manifest -->
+    <link rel="icon" type="image/svg+xml" href="./assets/logo-CYY-E2ds.svg" />
+    <link rel="shortcut icon" href="./assets/logo-CYY-E2ds.svg" />
+    <link rel="manifest" href="./assets/manifest-CnI0b5Ja.json" />
+    <link rel="apple-touch-icon" href="./assets/icon-1024-C7701zAc.jpg" />
+    <link rel="icon" type="image/jpeg" sizes="1024x1024" href="./assets/icon-1024-C7701zAc.jpg" />
+    <title>VIAS</title>
+    <script type="module" crossorigin src="./assets/index-WS3ubvrV.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BFpl5GKE.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Automatic fallback if repository root is served uncompiled on GitHub Pages
+      if (
+        window.location.hostname.indexOf('github.io') !== -1 &&
+        window.location.pathname.indexOf('/docs') === -1 &&
+        document.querySelector('script[src*="main.tsx"]')
+      ) {
+        var cleanPath = window.location.pathname.replace(/\/+$/, '');
+        window.location.replace(cleanPath + '/docs/' + window.location.search + window.location.hash);
+      }
+    </script>
+    <script>
+      // Prevent theme flashing
+      const savedTheme = localStorage.getItem('atlas_theme');
+      if (savedTheme === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      }
+      
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then(registration => {
+            console.log('SW registered: ', registration);
+          }).catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
+
