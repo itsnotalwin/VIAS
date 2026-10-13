@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Blob } from './Blob';
 import { 
   Grid, ImageIcon, Video, FileText, Link, Heart, Folder, Tag, 
   SortDesc, SortAsc, Eye, Type, Globe, Plus, X, Search, BarChart2, Download, Settings, Sun, Moon 
@@ -126,7 +127,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           paddingLeft: 'env(safe-area-inset-left)'
         }}
       >
-        <div className="flex flex-col gap-6 pt-4">
+        <Blob variant={1} grain={0.3} className="pointer-events-none absolute -left-20 -bottom-28 w-56 h-56 opacity-[0.06] -z-0" />
+        <div className="flex flex-col gap-6 pt-4 relative">
           {/* Mobile search & view switches */}
           <div className="px-4 flex flex-col gap-3 md:hidden">
             <div className="relative">
@@ -503,8 +505,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className="px-4 py-4 border-t border-[var(--border)] flex flex-col gap-2 items-center md:items-start select-none"
           style={{ paddingBottom: '1rem' }}
         >
-          <div className="text-[10px] font-mono text-[var(--text-dim)] text-center md:text-left w-full mt-1">VIAS.OS Archive Ecosystem</div>
-          <div className="text-[9px] font-mono text-[var(--text-muted)]/20 text-center md:text-left w-full">v1.2.0 · Offline Sync · Local Storage</div>
+          <div className="text-[10px] font-mono text-[var(--text-muted)] text-center md:text-left w-full mt-1">VIAS · local archive</div>
+          <div className="text-[9px] font-mono text-[var(--text-dim)] text-center md:text-left w-full">v1.2.0 · synced · stored on this device</div>
         </div>
       </aside>
     </>

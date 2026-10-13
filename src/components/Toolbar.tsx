@@ -30,10 +30,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             key={tab.type}
             onClick={() => onFilterChange({ type: tab.type })}
             className={`
-              text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full border transition shrink-0
+              text-[12px] font-medium px-4 py-1.5 rounded-full border transition shrink-0
               ${idx === 0 ? 'ml-[-19px]' : ''}
               ${isCurrent 
-                ? 'bg-[var(--text)] text-[var(--app-bg)] border-[var(--text)] shadow-[0_4px_12px_rgba(var(--text-rgb),0.1)]' 
+                ? 'bg-[var(--text)] text-[var(--on)] border-[var(--text)]' 
                 : 'bg-transparent text-[var(--text-muted)] border-[var(--border)] hover:border-[var(--text)] hover:text-[var(--text)]'
               }
             `}
@@ -45,7 +45,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
       <div className="flex-1"></div>
 
-      <div className="text-[10px] text-[var(--text-dim)] font-mono font-bold tracking-widest uppercase shrink-0">
+      <div className="text-[10px] text-[var(--text-muted)] font-mono tracking-widest uppercase shrink-0">
         {filteredCount} item{filteredCount !== 1 ? 's' : ''}
       </div>
     </div>

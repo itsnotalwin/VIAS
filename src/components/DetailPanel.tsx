@@ -235,7 +235,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
         </div>
         <button 
           onClick={onClose}
-          className="text-[#0A84FF] hover:opacity-80 text-sm font-semibold p-1"
+          className="text-[var(--text)] hover:opacity-80 text-sm font-semibold p-1"
         >
           Done
         </button>
@@ -346,7 +346,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
               onBlur={() => {
                 onUpdateItem(item.id, { textContent: textContent });
               }}
-              className="w-full bg-yellow-100 dark:bg-[#1f1e15] text-yellow-900 dark:text-yellow-100 border border-yellow-200 dark:border-yellow-900/50 text-sm rounded-xl p-3 min-h-[160px] focus:outline-none focus:border-yellow-500 transition resize-y font-medium leading-relaxed"
+              className="w-full bg-[var(--soft)] text-[var(--text)] border border-[var(--border)] dark:border-yellow-900/50 text-sm rounded-xl p-3 min-h-[160px] focus:outline-none focus:border-yellow-500 transition resize-y font-medium leading-relaxed"
             />
           </div>
         )}
@@ -359,7 +359,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
               href={item.url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-sm text-[#0A84FF] hover:text-[#409CFF] flex items-center gap-1.5 break-all leading-normal transition"
+              className="text-sm text-[var(--text)] hover:opacity-80 flex items-center gap-1.5 break-all leading-normal transition"
             >
               <span className="underline">{item.url}</span>
               <ExternalLink className="w-3.5 h-3.5 shrink-0" />

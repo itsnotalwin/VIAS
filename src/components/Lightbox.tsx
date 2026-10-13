@@ -184,7 +184,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
         className="flex-1 flex items-center justify-center p-4 relative overflow-hidden"
       >
         {isMediaLoading ? (
-          <Loader2 className="w-10 h-10 text-[#0A84FF] animate-spin" />
+          <Loader2 className="w-10 h-10 text-[var(--text)] animate-spin" />
         ) : isSpotify && spData ? (
           <div className="w-full max-w-xl h-[352px] shadow-2xl rounded-2xl overflow-hidden border border-white/10 bg-[#0a0a0a]">
             <iframe 

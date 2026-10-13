@@ -5,7 +5,6 @@ import {
   HelpCircle, Upload, Eye, EyeOff, Loader2, Globe, Sun, Moon, StickyNote, Cloud
 } from 'lucide-react';
 import { FilterState } from '../types';
-import logoUrl from '../assets/logo.svg';
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -68,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header 
-      className="sticky top-0 bg-[var(--app-bg)]/80 backdrop-blur-2xl border-b border-[var(--border)] flex items-center justify-between shrink-0 z-[100] gap-3 select-none"
+      className="sticky top-0 bg-[var(--app-bg)]/85 backdrop-blur-2xl border-b border-[var(--border)] flex items-center justify-between shrink-0 z-[100] gap-3 select-none"
       style={{
         paddingTop: 'max(env(safe-area-inset-top), 0.75rem)',
         paddingBottom: '0.75rem',
@@ -86,17 +85,9 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Main Brand Logo */}
       <div className="hidden md:flex items-center gap-2 group cursor-pointer select-none mr-4">
-        <div className="w-8 h-8 rounded-sm bg-[var(--text)] flex items-center justify-center">
-          <img 
-            src={logoUrl} 
-            alt="VIAS" 
-            className="w-5 h-5 object-contain [filter:invert(1)] dark:[filter:invert(0)]" 
-          />
-        </div>
-        <div className="flex flex-col -gap-1">
-          <span className="text-[var(--text)] text-[11px] font-black tracking-[0.2em] uppercase italic">VIAS</span>
-          <span className="text-[8px] text-[var(--text-muted)] font-mono tracking-widest uppercase">Archive</span>
-        </div>
+        <span className="font-display text-[26px] leading-none tracking-[0.04em] text-[var(--text)]">
+          VIAS<span className="inline-block w-[0.2em] h-[0.2em] rounded-full bg-[var(--text)] ml-[0.1em]" />
+        </span>
       </div>
 
       {/* Capture input box */}
@@ -112,7 +103,7 @@ export const Header: React.FC<HeaderProps> = ({
           onChange={(e) => onCaptureInputChange(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={isIngesting}
-          className="w-full h-11 bg-[var(--text)]/[0.03] border border-[var(--border)] text-[var(--text)] pl-11 pr-[80px] rounded-2xl text-[13px] font-medium tracking-tight focus:outline-none focus:border-[var(--text)] focus:bg-[var(--text)]/[0.05] transition-all disabled:opacity-50 placeholder:text-[var(--text-dim)]"
+          className="w-full h-11 bg-transparent border border-[var(--border-bright)] text-[var(--text)] pl-11 pr-[80px] rounded-full text-[13px] font-normal focus:outline-none focus:border-[var(--text)] focus:bg-[var(--text)]/[0.05] transition-all disabled:opacity-50 placeholder:text-[var(--text-dim)]"
         />
 
         {isIngesting ? (
@@ -153,25 +144,25 @@ export const Header: React.FC<HeaderProps> = ({
           placeholder="Search items..." 
           value={filter.search || ''}
           onChange={(e) => onFilterChange({ search: e.target.value })}
-          className="w-full h-11 bg-[var(--text)]/[0.03] border border-[var(--border)] text-[var(--text)] pl-10 pr-4 rounded-2xl text-[13px] font-medium tracking-tight focus:outline-none focus:border-[var(--text)] focus:bg-[var(--text)]/[0.05] transition-all placeholder:text-[var(--text-dim)]"
+          className="w-full h-11 bg-transparent border border-[var(--border-bright)] text-[var(--text)] pl-10 pr-4 rounded-full text-[13px] font-normal focus:outline-none focus:border-[var(--text)] focus:bg-[var(--text)]/[0.05] transition-all placeholder:text-[var(--text-dim)]"
         />
       </div>
 
       {/* Layout selector (Grid / Spatial) */}
-      <div className="hidden md:flex bg-[var(--text)]/5 p-1 rounded-2xl border border-[var(--border)] shrink-0">
+      <div className="hidden md:flex p-1 rounded-full border border-[var(--border-bright)] shrink-0">
         <button 
           onClick={() => onViewChange('grid')}
-          className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition flex items-center gap-2 ${view === 'grid' ? 'bg-[var(--text)] text-[var(--app-bg)] shadow-xl shadow-[var(--text)]/10' : 'text-[var(--text-muted)] hover:text-[var(--text)]'}`}
+          className={`px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition flex items-center gap-2 ${view === 'grid' ? 'bg-[var(--text)] text-[var(--on)]' : 'text-[var(--text-muted)] hover:text-[var(--text)]'}`}
         >
           <LayoutGrid className="w-3.5 h-3.5" />
           <span>Grid</span>
         </button>
         <button 
           onClick={() => onViewChange('canvas')}
-          className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition flex items-center gap-2 ${view === 'canvas' ? 'bg-[var(--text)] text-[var(--app-bg)] shadow-xl shadow-[var(--text)]/10' : 'text-[var(--text-muted)] hover:text-[var(--text)]'}`}
+          className={`px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition flex items-center gap-2 ${view === 'canvas' ? 'bg-[var(--text)] text-[var(--on)]' : 'text-[var(--text-muted)] hover:text-[var(--text)]'}`}
         >
           <BarChart2 className="w-3.5 h-3.5 rotate-90" />
-          <span>Spatial Board</span>
+          <span>Canvas</span>
         </button>
       </div>
 
@@ -180,14 +171,14 @@ export const Header: React.FC<HeaderProps> = ({
         <button 
           onClick={onToggleTheme}
           title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          className="w-11 h-11 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/5 rounded-2xl transition active:scale-90 border border-[var(--border)]"
+          className="w-11 h-11 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/5 rounded-full transition active:scale-90 border border-[var(--border-bright)]"
         >
           {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
         </button>
         <button 
           onClick={onOpenSettings}
           title="System Settings"
-          className="w-11 h-11 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/5 rounded-2xl transition active:scale-90 border border-[var(--border)]"
+          className="w-11 h-11 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/5 rounded-full transition active:scale-90 border border-[var(--border-bright)]"
         >
           <Settings className="w-4 h-4" />
         </button>
@@ -195,7 +186,7 @@ export const Header: React.FC<HeaderProps> = ({
         <button 
           onClick={onOpenImportExport}
           title="Data Backup & Sync"
-          className="w-11 h-11 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/5 rounded-2xl transition active:scale-90 border border-[var(--border)]"
+          className="w-11 h-11 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/5 rounded-full transition active:scale-90 border border-[var(--border-bright)]"
         >
           <Cloud className="w-4 h-4" />
         </button>
@@ -204,12 +195,12 @@ export const Header: React.FC<HeaderProps> = ({
           <button 
             onClick={onLogout}
             title={`Sign Out (${currentUser.email})`}
-            className="h-11 px-3 flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/5 rounded-2xl transition active:scale-90 border border-[var(--border)]"
+            className="h-11 px-3 flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/5 rounded-full transition active:scale-90 border border-[var(--border-bright)]"
           >
             {currentUser.photoURL ? (
               <img src={currentUser.photoURL} className="w-6 h-6 rounded-full border border-[var(--border)]" alt="" referrerPolicy="no-referrer" />
             ) : (
-              <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center text-[10px] font-bold text-blue-400">
+              <div className="w-6 h-6 rounded-full bg-[var(--text)] flex items-center justify-center text-[10px] font-bold text-[var(--on)]">
                 {currentUser.email?.slice(0, 2).toUpperCase()}
               </div>
             )}

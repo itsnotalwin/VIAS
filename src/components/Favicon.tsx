@@ -43,13 +43,13 @@ export const Favicon: React.FC<FaviconProps> = ({ domain, className = "w-4 h-4 r
   if (errorRef || !domain || domain === 'local upload') {
     // Elegant fallback with nice pastel tones based on the first letter char code
     const colors = [
-      'bg-red-500/10 text-red-500 border-red-500/20',
-      'bg-blue-500/10 text-blue-500 border-blue-500/20',
-      'bg-green-500/10 text-green-500 border-green-500/20',
-      'bg-purple-500/10 text-purple-500 border-purple-500/20',
-      'bg-pink-500/10 text-pink-500 border-pink-500/20',
-      'bg-amber-500/10 text-amber-500 border-amber-500/20',
-      'bg-teal-500/10 text-teal-500 border-teal-500/20'
+      'bg-[var(--text)]/5 text-[var(--text-muted)] border-[var(--border-bright)]',
+      'bg-[var(--text)]/5 text-[var(--text-muted)] border-[var(--border-bright)]',
+      'bg-[var(--text)]/5 text-[var(--text-muted)] border-[var(--border-bright)]',
+      'bg-[var(--text)]/5 text-[var(--text-muted)] border-[var(--border-bright)]',
+      'bg-[var(--text)]/5 text-[var(--text-muted)] border-[var(--border-bright)]',
+      'bg-[var(--text)]/5 text-[var(--text-muted)] border-[var(--border-bright)]',
+      'bg-[var(--text)]/5 text-[var(--text-muted)] border-[var(--border-bright)]'
     ];
     const colorIndex = firstLetter.charCodeAt(0) % colors.length;
     const colorClass = colors[colorIndex];

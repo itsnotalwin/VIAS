@@ -83,7 +83,7 @@ export const Card: React.FC<CardProps> = ({
           if (!isCanvas && onClick) onClick(item.id, e);
         }}
       >
-        <div className="absolute top-0 left-0 w-full h-[3px] bg-[var(--text)] opacity-20 group-hover:opacity-100 transition-opacity" />
+        
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-bold text-sm tracking-tight line-clamp-1 opacity-90 font-display">{item.title}</h3>
           <button 
@@ -197,11 +197,11 @@ export const Card: React.FC<CardProps> = ({
             className={`w-full block transition-all duration-300 ${item.fitMode === 'cover' ? `object-cover ${isCanvas ? 'h-28' : 'h-44'}` : 'h-auto object-contain'}`}
           />
         ) : (
-          <div className="flex flex-col items-center justify-center py-10 gap-3 w-full bg-gradient-to-br from-[var(--surface-higher)] to-[var(--surface)] relative overflow-hidden">
-            <div className="absolute inset-0 bg-[var(--text)]/[0.02] active:bg-[var(--text)]/[0.05] transition-colors" />
+          <div className="flex flex-col items-center justify-center py-10 gap-3 w-full bg-[var(--soft)] relative overflow-hidden">
+            <div className="absolute inset-0 halftone opacity-70" />
             <div className="relative">
                 <div className="absolute inset-0 bg-[var(--text)]/5 blur-2xl rounded-full scale-150" />
-                <span className="relative w-16 h-16 flex items-center justify-center bg-[var(--text)]/[0.03] border border-[var(--text)]/10 rounded-2xl backdrop-blur-sm shadow-xl">
+                <span className="relative w-16 h-16 flex items-center justify-center bg-[var(--surface)] rounded-full">
                 {getFallbackIcon()}
                 </span>
             </div>
@@ -247,11 +247,11 @@ export const Card: React.FC<CardProps> = ({
 
         {/* Badges and tags info */}
         <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-[9px] font-black tracking-[0.1em] uppercase text-[var(--text-muted)] bg-[var(--text)]/5 border border-[var(--border)] px-2 py-0.5 rounded-md shrink-0">
+          <span className="text-[9px] font-semibold tracking-[0.12em] uppercase text-[var(--text-muted)] border border-[var(--border-bright)] px-2 py-0.5 rounded-full shrink-0">
             {item.type}
           </span>
           {item.colonyId && (
-            <span className="text-[9px] font-black tracking-[0.15em] uppercase text-[var(--app-bg)] bg-[var(--text)] px-2 py-0.5 rounded-md shrink-0">
+            <span className="text-[9px] font-semibold tracking-[0.12em] uppercase text-[var(--on)] bg-[var(--text)] px-2 py-0.5 rounded-full shrink-0">
               {item.colonyId}
             </span>
           )}
