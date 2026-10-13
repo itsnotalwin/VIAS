@@ -72,7 +72,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         {/* Header bar */}
         <div className="flex items-center justify-between p-4 px-6 border-b border-[var(--border)] sticky top-0 bg-[var(--app-bg)]/95 backdrop-blur-md z-20 shrink-0 select-none">
           <h2 className="text-base font-bold text-[var(--text)] tracking-tight flex items-center gap-2">
-            <Settings className="w-4 h-4 text-[#0A84FF]" />
+            <Settings className="w-4 h-4 text-[var(--text)]" />
             <span>Preferences & Settings</span>
           </h2>
           <button 
@@ -98,7 +98,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           
           {/* Appearance Section */}
           <div className="flex flex-col gap-2 border-t border-[var(--border)] pt-4">
-            <span className="text-[10px] font-bold tracking-widest text-[#0A84FF] uppercase flex items-center gap-1.5">
+            <span className="text-[10px] font-bold tracking-widest text-[var(--text)] uppercase flex items-center gap-1.5">
               <Sun className="w-3.5 h-3.5" />
               <span>Visual Appearance</span>
             </span>
@@ -119,7 +119,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           
           {/* AI Settings Section */}
           <div className="flex flex-col gap-2">
-            <span className="text-[10px] font-bold tracking-widest text-[#0A84FF] uppercase flex items-center gap-1.5">
+            <span className="text-[10px] font-bold tracking-widest text-[var(--text)] uppercase flex items-center gap-1.5">
               <Key className="w-3.5 h-3.5" />
               <span>AI Auto-Tagging & Search</span>
             </span>
@@ -137,7 +137,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               />
               <button 
                 onClick={handleSaveGroqKey}
-                className="h-9 px-4 bg-[#0A84FF] hover:bg-[#409CFF] text-white rounded-xl text-xs font-semibold transition self-end select-none"
+                className="h-9 px-4 bg-[var(--text)] hover:opacity-85 text-[var(--on)] rounded-xl text-xs font-semibold transition self-end select-none"
               >
                 Save Groq Key
               </button>
@@ -147,7 +147,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {/* Sync status metrics */}
           <div className="flex flex-col gap-1 border-t border-[var(--border)] pt-4">
             <span className="text-[10px] font-bold tracking-widest text-[var(--text-dim)] uppercase mb-2 flex items-center gap-1.5 select-none">
-              <ShieldCheck className="w-3.5 h-3.5 text-green-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-[var(--text)]" />
               <span>Global Cloud Sync</span>
             </span>
             <OptionRow label="Ecosystem Connection" value="Shared Firestore Network" />
