@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "ArchiveItem": {
+      "title": "ArchiveItem",
+      "description": "An item saved in the visual archive.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["link", "image", "video", "pdf", "document", "html", "note"] },
+        "url": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "thumbnail": { "type": "string" },
+        "domain": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "collections": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" },
+        "textContent": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" },
+        "openCount": { "type": "number" },
+        "favorite": { "type": "boolean" },
+        "isLocalFile": { "type": "boolean" },
+        "fileName": { "type": "string" },
+        "fileSize": { "type": "number" },
+        "colonyId": { "type": "string" },
+        "aiAnalysis": { "type": "object" },
+        "ownerId": { "type": "string" }
+      },
+      "required": ["id", "type", "url", "title", "tags", "collections", "createdAt", "updatedAt", "openCount", "favorite"]
+    },
+    "SharedConfig": {
+      "title": "SharedConfig",
+      "description": "Configuration for the canvas and collections.",
+      "type": "object",
+      "properties": {
+        "collections": { "type": "array", "items": { "type": "string" } },
+        "canvasPositions": { "type": "object" },
+        "canvasFrames": { "type": "object" },
+        "ownerId": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{userId}/shared_items": {
+      "schema": { "$ref": "#/entities/ArchiveItem" },
+      "description": "User specific archive items"
+    },
+    "users/{userId}/shared_config": {
+      "schema": { "$ref": "#/entities/SharedConfig" },
+      "description": "User specific configurations"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global safety net: block all generic access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Auth helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isVerified() {
+      return isSignedIn() && (request.auth.token.email_verified == true || request.auth.token.firebase.sign_in_provider == 'google.com');
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email == 'itsnotalwin@gmail.com';
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidId(id) {
+       return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidArchiveItem(data) {
+      let requiredFields = ['id', 'type', 'url', 'title', 'tags', 'collections', 'createdAt', 'updatedAt', 'openCount', 'favorite', 'ownerId'];
+      let allowedFields = ['id', 'type', 'url', 'title', 'tags', 'collections', 'createdAt', 'updatedAt', 'openCount', 'favorite', 'ownerId', 'description', 'thumbnail', 'domain', 'notes', 'textContent', 'isLocalFile', 'fileName', 'fileSize', 'colonyId', 'aiAnalysis', 'fitMode'];
+      return data.keys().hasAll(requiredFields) &&
+             data.keys().hasOnly(allowedFields) &&
+             data.id is string && data.id.size() <= 128 && data.id.matches('^[a-zA-Z0-9_\\-]+$') &&
+             data.type is string && data.type in ['link', 'image', 'video', 'pdf', 'document', 'html', 'note'] &&
+             data.url is string && data.url.size() <= 10000 &&
+             data.title is string && data.title.size() <= 5000 &&
+             data.tags is list && data.tags.size() <= 100 && (data.tags.size() == 0 || data.tags[0] is string) &&
+             data.collections is list && data.collections.size() <= 100 && (data.collections.size() == 0 || data.collections[0] is string) &&
+             data.createdAt is number && data.updatedAt is number &&
+             data.openCount is number && data.openCount >= 0 && data.favorite is bool &&
+             data.ownerId is string && data.ownerId == request.auth.uid &&
+             (!('description' in data) || (data.description is string && data.description.size() <= 50000) || data.description == null) &&
+             (!('thumbnail' in data) || (data.thumbnail is string && data.thumbnail.size() <= 50000) || data.thumbnail == null) &&
+             (!('domain' in data) || (data.domain is string && data.domain.size() <= 5000) || data.domain == null) &&
+             (!('notes' in data) || (data.notes is string && data.notes.size() <= 100000) || data.notes == null) &&
+             (!('textContent' in data) || (data.textContent is string && data.textContent.size() <= 1000000) || data.textContent == null) &&
+             (!('isLocalFile' in data) || (data.isLocalFile is bool) || data.isLocalFile == null) &&
+             (!('fileName' in data) || (data.fileName is string && data.fileName.size() <= 5000) || data.fileName == null) &&
+             (!('fileSize' in data) || (data.fileSize is number) || data.fileSize == null) &&
+             (!('colonyId' in data) || (data.colonyId is string && data.colonyId.size() <= 128) || data.colonyId == null) &&
+             (!('aiAnalysis' in data) || (data.aiAnalysis is map) || data.aiAnalysis == null) &&
+             (!('fitMode' in data) || (data.fitMode is string && data.fitMode in ['cover', 'contain']) || data.fitMode == null);
+    }
+
+    function isValidSharedConfig(data) {
+      let requiredFields = ['collections', 'canvasPositions', 'canvasFrames', 'ownerId'];
+      return data.keys().hasAll(requiredFields) &&
+             data.keys().hasOnly(requiredFields) &&
+             data.collections is list && data.collections.size() <= 100 &&
+             data.canvasPositions is map &&
+             data.canvasFrames is map &&
+             data.ownerId is string && data.ownerId == request.auth.uid;
+    }
+
+    match /users/{userId} {
+      match /shared_items/{itemId} {
+        allow read: if isOwner(userId);
+        
+        allow create: if isOwner(userId) &&
+                      isValidId(itemId) &&
+                      isValidArchiveItem(incoming()) &&
+                      incoming().id == itemId;
+
+        allow update: if isOwner(userId) &&
+                      isValidId(itemId) &&
+                      isValidArchiveItem(incoming()) &&
+                      incoming().id == existing().id &&
+                      incoming().createdAt == existing().createdAt;
+
+        allow delete: if isOwner(userId) && isValidId(itemId);
+      }
+
+      match /shared_config/{configId} {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidId(configId) && isValidSharedConfig(incoming());
+        allow delete: if isOwner(userId) && isValidId(configId);
+      }
+    }
+    
+    // Legacy/Admin paths
+    match /shared_items/{itemId} {
+      allow read, delete: if isAdmin() && isValidId(itemId);
+      allow create, update: if isAdmin() && isValidId(itemId) && isValidArchiveItem(incoming());
+    }
+
+    match /shared_config/{configId} {
+      allow read, write: if isAdmin() && isValidId(configId);
+    }
+  }
+}
